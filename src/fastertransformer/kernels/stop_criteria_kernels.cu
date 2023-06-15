@@ -59,6 +59,7 @@ __global__ void stop_words_criterion(const int* output_ids,
             const int previous_token = output_ids[(step - (item_size - 1) + token_idx) * batch_size * beam_width
                                                   + id_offset + batch_idx * beam_width + parent_id];
 
+            // printf("previous_token %d %d %d \n", previous_token, batch_idx, base_stop_words[item_start + token_idx]);
             if (previous_token != base_stop_words[item_start + token_idx]) {
                 should_stop = false;
                 break;
@@ -129,6 +130,7 @@ __global__ void length_criterion(bool*           finished,
 
     if (threadIdx.x == 0) {
         finished_sum[0] = block_finished_count;
+        // printf("finished_sum %d \n", finished_sum[0]);
     }
 }
 
@@ -154,6 +156,8 @@ void invokeLengthCriterion(bool*           finished,
     sync_check_cuda_error();
 
     *should_stop = h_pinned_finished_sum_[0] == batch_size * beam_width;
+    // printf("step %d \n", step);
+    // printf("should_stop %d \n", *should_stop);
 }
 
 }  // namespace fastertransformer

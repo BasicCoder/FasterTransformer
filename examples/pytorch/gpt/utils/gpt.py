@@ -177,7 +177,7 @@ class GPTWeights:
                 self.inference_data_type])] * layer_num)   # adaptor2_bias2
 
         # Initialization
-        self._map(lambda w: torch.nn.init.normal_(w, mean=0., std=1.))
+        # self._map(lambda w: torch.nn.init.normal_(w, mean=0., std=1.))
 
         if (self.int8_mode != 0):
             self.int8_w.extend([torch.zeros(global_hidden_units, local_hidden_units *
@@ -591,6 +591,7 @@ class GPT(nn.Module):
                 presence_penalty: typing.Optional[torch.FloatTensor] = None,
                 min_length: typing.Optional[torch.IntTensor] = None,
                 random_seed: typing.Optional[torch.LongTensor] = None,
+                stop_words_list: typing.Optional[torch.IntTensor] = None,
                 bad_words_list: typing.Optional[torch.IntTensor] = None,
                 return_output_length: bool = False,
                 return_cum_log_probs: int = 0):
@@ -618,6 +619,7 @@ class GPT(nn.Module):
                                      presence_penalty,  # optional, can be None
                                      min_length,  # optional, can be None
                                      random_seed,  # optional, can be None
+                                     stop_words_list, # optional, can be None
                                      bad_words_list, # optional, can be None
                                      return_cum_log_probs)  # optional, can be None
         if return_cum_log_probs == 0:

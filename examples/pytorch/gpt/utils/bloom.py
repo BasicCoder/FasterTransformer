@@ -128,6 +128,7 @@ class BloomInferParam:
     random_seed: torch.LongTensor = None
     return_output_length: bool = True
     return_cum_log_probs: bool = False
+    stop_words_list: torch.IntTensor = None
 
     @classmethod
     def from_args(cls,
@@ -153,7 +154,8 @@ class BloomInferParam:
             repetition_penalty=args.repetition_penalty * ones,
             random_seed=random_seed,
             return_output_length=args.return_cum_log_probs > 0,
-            return_cum_log_probs=args.return_cum_log_probs)
+            return_cum_log_probs=args.return_cum_log_probs,
+            stop_words_list=args.stop_words_list)
 
     def slice_args(self, idx):
         safe_slice = lambda x: x[idx] if x.numel() > 1 else x

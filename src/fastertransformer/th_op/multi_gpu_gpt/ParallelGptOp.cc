@@ -149,6 +149,7 @@ std::vector<th::Tensor> ParallelGptOp::forward(th::Tensor               input_id
                                                th::optional<th::Tensor> presence_penalty_opt,
                                                th::optional<th::Tensor> min_length_opt,
                                                th::optional<th::Tensor> random_seed_opt,
+                                               th::optional<th::Tensor> stop_words_list_opt,
                                                th::optional<th::Tensor> bad_words_list_opt,
                                                th::optional<int64_t>    return_cum_log_probs_opt)
 {
@@ -195,6 +196,7 @@ std::vector<th::Tensor> ParallelGptOp::forward(th::Tensor               input_id
                    presence_penalty_opt,
                    min_length_opt,
                    random_seed_opt,
+                   stop_words_list_opt,
                    bad_words_list_opt,
                    return_cum_log_probs_opt);
     if (return_cum_log_probs > 0) {

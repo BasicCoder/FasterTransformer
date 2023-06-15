@@ -443,8 +443,9 @@ void DynamicDecodeLayer<T>::forward(TensorMap* output_tensors, TensorMap* input_
         topk_decode_->forward(&decode_output_tensors, &decode_input_tensors);
         topp_decode_->forward(&decode_output_tensors, &decode_input_tensors);
     }
-
+    // printf("[ERROR] pre enter stop_words_list \n");
     if (input_tensors->isExist("stop_words_list")) {
+        // printf("[ERROR] enter stop words list \n");
         const size_t id_offset         = ite * local_batch_size * beam_width;
         const size_t stop_words_length = input_tensors->at("stop_words_list").shape[2];
 

@@ -45,6 +45,7 @@ public:
                          th::optional<th::Tensor> presence_penalty_opt,
                          th::optional<th::Tensor> min_length_opt,
                          th::optional<th::Tensor> random_seed_opt,
+                         th::optional<th::Tensor> stop_words_list_opt,
                          th::optional<th::Tensor> bad_words_list_opt,
                          th::optional<int64_t>    return_cum_log_probs_opt) = 0;
 };
@@ -282,6 +283,7 @@ public:
                  th::optional<th::Tensor> presence_penalty_opt,
                  th::optional<th::Tensor> min_length_opt,
                  th::optional<th::Tensor> random_seed_opt,
+                 th::optional<th::Tensor> stop_words_list_opt,
                  th::optional<th::Tensor> bad_words_list_opt,
                  th::optional<int64_t>    return_cum_log_probs_opt) override
     {
@@ -409,6 +411,10 @@ public:
                  convert_tensor<unsigned long long int>(random_seed_opt.value(), ft::MemoryType::MEMORY_CPU)});
         }
 
+        if (stop_words_list_opt.has_value()) {
+            CHECK_INPUT(stop_words_list_opt.value(), torch::kInt32);
+            input_tensors.insert({"stop_words_list", convert_tensor<int>(stop_words_list_opt.value())});
+        }
         if (bad_words_list_opt.has_value()) {
             CHECK_INPUT(bad_words_list_opt.value(), torch::kInt32);
             input_tensors.insert({"bad_words_list", convert_tensor<int>(bad_words_list_opt.value())});
@@ -539,6 +545,7 @@ public:
                                th::optional<th::Tensor> presence_penalty_opt,
                                th::optional<th::Tensor> min_length_opt,
                                th::optional<th::Tensor> random_seed_opt,
+                               th::optional<th::Tensor> stop_words_list_opt,
                                th::optional<th::Tensor> bad_words_list_opt,
                                th::optional<int64_t>    return_cum_log_probs_opt);
 
